@@ -4,6 +4,9 @@ import ExceptionalSection from '../Exceptional/ExceptionalSection';
 
 import InfoCards from '../InfoCards/InfoCards';
 import Services from '../Services/Services';
+import Testimonial from '../Testimonial/Testimonial';
+import ConnectUs from './ConnectUs/ConnectUs';
+import MakeAppoinment from './MakeAppoinment/MakeAppoinment';
 
 
 const Home = () => {
@@ -13,6 +16,9 @@ const Home = () => {
             <InfoCards></InfoCards>
             <Services></Services>
             <ExceptionalSection></ExceptionalSection>
+            <MakeAppoinment></MakeAppoinment>
+            <Testimonial></Testimonial>
+            <ConnectUs></ConnectUs>
         </div>
     );
 };
