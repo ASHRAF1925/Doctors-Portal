@@ -1,15 +1,44 @@
-import React from "react";
+import { Result } from "postcss";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Signup = () => {
+
+    const {createUser,updateUser}=useContext(AuthContext);
+    const [signUpError,setsignUpError]=useState('')
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleLogin = (data) => {
+  const handleSignup = (data) => {
     console.log(data);
+    setsignUpError('')
+    createUser(data.email,data.password)
+    .then(
+       result=>{
+        const user=result.user;
+        console.log(user);
+        toast('User Created Successfully');
+
+        // seting the user name and photoURl start
+        const userInfo={
+            displayName:data.name
+        }
+        updateUser(userInfo)
+        .then(()=>{})
+        .catch(error=>console.log(error));
+        // seting the user name and photoURl end
+        
+       } 
+    )
+    .catch(error=>{console.log(error)
+    setsignUpError(error.message)
+    
+    })
   };
 
   return (
@@ -17,7 +46,7 @@ const Signup = () => {
       <div className="h-[800px] flex justify-center items-center">
         <div className="w-96 p-7 ">
           <h1 className="text-xl text-center">Signup</h1>
-          <form onSubmit={handleSubmit(handleLogin)}>
+          <form onSubmit={handleSubmit(handleSignup)}>
 
           <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -75,10 +104,13 @@ const Signup = () => {
             </div>
 
             <input
-              className="btn btn-accent w-full text-white"
+              className="btn btn-accent w-full text-white mt-4"
               value="SignUp"
               type="submit"
             />
+            {
+               signUpError && <p className="text-red-600">{signUpError}</p> 
+            }
           </form>
           <p>
             Already Have an Account ?{" "}
